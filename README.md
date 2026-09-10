@@ -9,13 +9,14 @@
 
 ---
 
-## 👥 Participantes
+# 👥 Participantes
 
 * **Bianca Cirilo**
 * **Edilaine Paulino**
 * **Fabio Bitencourt**
 * **Guilherme Leite**
 * **Ronaldo Soares**
+* **Victor Fazano**
 
 ---
 
@@ -24,6 +25,10 @@
 O projeto **SGA – Sistema de Gestão de Ambientes** tem como objetivo aperfeiçoar a solução desenvolvida no primeiro semestre, ampliando suas funcionalidades para facilitar a **gestão, ocupação, consulta, reserva e manutenção dos espaços físicos da instituição**.
 
 A proposta é centralizar as informações sobre **salas, turmas, docentes, horários, reservas, patrimônio e manutenção**, proporcionando maior organização, controle e eficiência na utilização dos ambientes.
+
+Além das funcionalidades administrativas, o sistema contará com um **canal público para comunicação de necessidades de manutenção**, permitindo que qualquer usuário informe um problema identificado em um ambiente sem necessidade de possuir acesso ou login no sistema.
+
+As informações enviadas pelo canal público serão encaminhadas ao **setor de Manutenção**, que realizará uma análise e determinará se a solicitação é procedente e se deverá ser convertida em uma ocorrência de manutenção.
 
 ---
 
@@ -38,13 +43,29 @@ Desenvolver uma solução para gerenciamento dos espaços físicos, permitindo:
 * 📊 Relatórios de utilização;
 * 🏷️ Controle patrimonial por **RFID e/ou QR Code**;
 * 🔧 Registro e acompanhamento de ocorrências de manutenção;
+* 🌐 Canal público para sugestão de manutenção;
+* 🔎 Triagem e validação das solicitações pelo setor de manutenção;
 * ⏱️ Monitoramento de **SLA** e indicadores.
 
-> **Objetivo central:** tornar a gestão dos ambientes mais organizada, integrada e eficiente.
+> **Objetivo central:** tornar a gestão dos ambientes mais organizada, integrada e eficiente, facilitando também a comunicação de problemas relacionados à infraestrutura.
 
 ---
 
 # 🔐 3. Perfis de Acesso
+
+## 🌐 Acesso Público
+
+O SGA disponibilizará, diretamente na **página principal**, um ícone de acesso rápido:
+
+> 🔧 **Sugerir Manutenção**
+
+Essa funcionalidade será **pública**, não exigindo login ou autenticação.
+
+O objetivo é permitir que qualquer usuário que identifique um problema em um ambiente possa comunicar a situação ao setor responsável.
+
+O acesso público ficará limitado ao envio da sugestão, não permitindo acesso às demais funcionalidades administrativas do sistema.
+
+---
 
 ## 👔 Coordenação
 
@@ -87,7 +108,19 @@ A reserva deverá considerar:
 
 ## 🔧 Manutenção
 
-Módulo previsto como alternativa caso a implantação do RFID não seja viável dentro do prazo.
+Responsável por:
+
+* Receber sugestões de manutenção;
+* Analisar as solicitações recebidas;
+* Validar a existência do problema;
+* Classificar as ocorrências;
+* Definir prioridade;
+* Aprovar ou não a solicitação;
+* Transformar uma sugestão aprovada em ocorrência;
+* Acompanhar o atendimento;
+* Registrar as etapas da manutenção;
+* Finalizar ocorrências;
+* Acompanhar SLA e indicadores.
 
 ---
 
@@ -105,25 +138,37 @@ Módulo previsto como alternativa caso a implantação do RFID não seja viável
 
 ---
 
-## 📅 Reserva de Salas
+# 📅 Reserva de Salas
 
-### 🔄 Fluxo da Reserva
+## 🔄 Fluxo da Reserva
 
 **Selecionar sala**
+
 ↓
+
 **Selecionar data**
+
 ↓
+
 **Selecionar horário**
+
 ↓
+
 **🔎 Verificar status da sala**
+
 ↓
+
 **Informar dados**
+
 ↓
+
 **✅ Confirmar reserva**
 
 Após a seleção da **data e do horário**, o sistema deverá consultar automaticamente o status da sala.
 
-### 📊 Status da Sala
+---
+
+## 📊 Status da Sala
 
 |        Status        | Situação                                   | Ação do sistema                    |
 | :------------------: | ------------------------------------------ | ---------------------------------- |
@@ -131,37 +176,45 @@ Após a seleção da **data e do horário**, o sistema deverá consultar automat
 |    🔴 **OCUPADA**    | Sala possui reserva ou alocação no horário | 🚫 Bloquear nova reserva           |
 | 🟠 **EM MANUTENÇÃO** | Sala indisponível para utilização          | 🚫 Bloquear nova reserva           |
 
-### 🟢 Sala Livre
+---
+
+## 🟢 Sala Livre
 
 Quando a sala estiver disponível:
 
 > **Status: 🟢 LIVRE**
+>
 > A sala está disponível para o horário selecionado.
+>
 > **O usuário poderá prosseguir com a reserva.**
 
 ---
 
-### 🔴 Sala Ocupada
+## 🔴 Sala Ocupada
 
 Quando existir uma reserva ou alocação:
 
 > **Status: 🔴 OCUPADA**
+>
 > A sala já possui uma reserva ou alocação para este horário.
+>
 > **Não será possível realizar uma nova reserva.**
 
 ---
 
-### 🟠 Sala em Manutenção
+## 🟠 Sala em Manutenção
 
 Quando a sala estiver indisponível para manutenção:
 
 > **Status: 🟠 EM MANUTENÇÃO**
+>
 > Esta sala está indisponível devido a uma manutenção programada ou ocorrência em andamento.
+>
 > **Não será possível realizar uma reserva.**
 
 ---
 
-### 🔒 Validação da Reserva
+## 🔒 Validação da Reserva
 
 O sistema deverá realizar uma **nova validação da disponibilidade no momento da confirmação da reserva**, evitando conflitos ou reservas simultâneas para o mesmo ambiente, data e horário.
 
@@ -173,23 +226,227 @@ A reserva deverá considerar:
 
 ---
 
-## 📊 Relatórios
+# 🌐 5. Canal Público — Sugestão de Manutenção
 
-Permitir consultas por:
+O sistema deverá disponibilizar na **página principal** um ícone de acesso rápido para comunicação de problemas relacionados aos ambientes.
 
-* Sala;
-* Turma;
-* Docente;
-* Período;
-* Status.
+### 🔧 Sugerir Manutenção
 
-As informações poderão incluir:
+O usuário poderá acessar essa funcionalidade **sem realizar login**.
 
-**Sala + Turma + Docente + Data + Horário + Status**
+A finalidade é facilitar a comunicação de problemas identificados nas salas e demais ambientes da instituição.
+
+### 📝 Informações da Sugestão
+
+O formulário poderá solicitar:
+
+* 👤 Nome do solicitante;
+* 📧 E-mail ou contato, quando aplicável;
+* 📍 Local/sala;
+* 📝 Descrição do problema;
+* ⚠️ Tipo de ocorrência;
+* 📅 Data e hora da identificação;
+* 📷 Foto opcional;
+* 💬 Observações adicionais.
 
 ---
 
-# 🏷️ 5. Controle Patrimonial
+## 🔄 Fluxo da Sugestão
+
+**🔧 Usuário acessa "Sugerir Manutenção"**
+
+↓
+
+**📝 Preenche o formulário**
+
+↓
+
+**📤 Envia a sugestão**
+
+↓
+
+**📥 Setor de Manutenção recebe**
+
+↓
+
+**🔎 Manutenção realiza a análise**
+
+↓
+
+**❓ Problema é considerado válido?**
+
+### ❌ Não
+
+**Sugestão não aprovada**
+
+↓
+
+Registro da análise
+
+### ✅ Sim
+
+**Sugestão aprovada**
+
+↓
+
+**🔧 Geração de ocorrência de manutenção**
+
+↓
+
+**▶️ Atendimento**
+
+↓
+
+**✅ Finalização**
+
+---
+
+# 🔎 6. Triagem e Validação da Manutenção
+
+As informações enviadas pelo acesso público **não serão consideradas automaticamente como ocorrências de manutenção**.
+
+O setor de Manutenção será responsável pela análise inicial da solicitação.
+
+Durante a triagem, poderá verificar:
+
+* Se o problema realmente existe;
+* Se a informação fornecida é suficiente;
+* Se o local informado está correto;
+* Se a solicitação pertence ao setor de Manutenção;
+* Qual o tipo de problema;
+* Qual a prioridade;
+* Se é necessária uma vistoria;
+* Se será necessário algum recurso para o atendimento.
+
+---
+
+## 📊 Status da Solicitação
+
+|           Status           | Descrição                                                           |
+| :------------------------: | ------------------------------------------------------------------- |
+| 🟡 **PENDENTE DE ANÁLISE** | Sugestão recebida e aguardando avaliação                            |
+|     ❌ **NÃO APROVADA**     | Problema não identificado ou solicitação considerada não procedente |
+|       ✅ **APROVADA**       | Problema validado pela Manutenção                                   |
+|    🔧 **EM ATENDIMENTO**   | Atendimento ou manutenção iniciado                                  |
+|      🏁 **FINALIZADA**     | Problema solucionado                                                |
+
+---
+
+# 🔧 7. Módulo de Manutenção
+
+O Módulo de Manutenção poderá ser desenvolvido como alternativa ou evolução do projeto, principalmente caso a implantação do RFID não seja viável dentro do prazo.
+
+O módulo será responsável por transformar as **sugestões validadas** em ocorrências de manutenção.
+
+---
+
+## 📝 Registro de Ocorrências
+
+Após a validação pelo setor de Manutenção, a sugestão poderá ser convertida em uma ocorrência.
+
+A ocorrência poderá conter:
+
+* 👤 Solicitante;
+* 👥 Turma, quando aplicável;
+* 📍 Local/sala;
+* 📝 Descrição;
+* 🕐 Data e hora;
+* 📷 Foto;
+* ⚠️ Tipo de ocorrência;
+* 🔎 Resultado da análise;
+* 👷 Responsável pelo atendimento;
+* 🚦 Prioridade;
+* 📊 Status.
+
+---
+
+## Exemplos de ocorrências
+
+* 💧 Vazamento;
+* ❄️ Ar-condicionado com defeito;
+* 💡 Lâmpada queimada;
+* 🖥️ Equipamento danificado;
+* ⚡ Problemas elétricos;
+* 🏗️ Problemas estruturais;
+* 🚪 Problemas em portas ou fechaduras;
+* 🪑 Problemas em mesas, cadeiras ou mobiliário;
+* 🧹 Problemas relacionados à infraestrutura do ambiente.
+
+---
+
+# 🔄 8. Fluxo de Atendimento
+
+Após a validação da solicitação:
+
+**📝 Sugestão recebida**
+
+↓
+
+**📥 Pendente de análise**
+
+↓
+
+**🔎 Em análise**
+
+↓
+
+**✅ Aprovada**
+
+↓
+
+**🔧 Em atendimento / Em manutenção**
+
+↓
+
+**🏁 Finalizada**
+
+O sistema deverá registrar o histórico de cada etapa, incluindo:
+
+* Data;
+* Hora;
+* Responsável;
+* Status;
+* Observações;
+* Ações realizadas.
+
+---
+
+# ⏱️ 9. SLA e Indicadores
+
+O módulo de manutenção deverá permitir acompanhar:
+
+* ⏱️ Tempo de resposta;
+* ▶️ Tempo até o início do atendimento;
+* 🛠️ Tempo de solução;
+* ⌛ Tempo total;
+* 🟢 SLA cumprido;
+* 🔴 SLA excedido.
+
+> ℹ️ **Importante:** os indicadores de SLA deverão considerar as ocorrências **aprovadas/validadas pela Manutenção**, evitando contabilizar como tempo de atendimento o período em que a solicitação ainda estava em análise.
+
+---
+
+## 📈 Indicadores
+
+Também poderão ser apresentados:
+
+* Total de sugestões recebidas;
+* Total de sugestões aprovadas;
+* Total de sugestões não aprovadas;
+* Total de ocorrências;
+* Ocorrências em andamento;
+* Ocorrências finalizadas;
+* Tempo médio de atendimento;
+* Locais com maior número de ocorrências;
+* Tipos de problemas mais recorrentes;
+* Quantidade de solicitações por período;
+* Percentual de sugestões convertidas em ocorrências;
+* Percentual de SLA cumprido;
+* Percentual de SLA excedido.
+
+---
+
+# 🏷️ 10. Controle Patrimonial
 
 Será analisada a utilização de tecnologias para identificação e controle dos patrimônios existentes nos ambientes.
 
@@ -204,86 +461,47 @@ Como alternativa ou complemento ao RFID, permitindo acessar um **checklist patri
 ### Exemplo — Sala 203
 
 ☑️ Computador
+
 ☑️ Projetor
+
 ☑️ Ar-condicionado
+
 ☑️ Mesa
+
 ☑️ Cadeiras
+
 ☑️ Quadro
+
 ☑️ Outros equipamentos
 
 ---
 
-# 🔧 6. Módulo de Manutenção
+# 📊 11. Relatórios
 
-Caso o RFID não seja viável, o projeto poderá priorizar o desenvolvimento do **Módulo de Manutenção**.
+O sistema deverá permitir consultas e relatórios por:
 
-## 📝 Registro de Ocorrências
-
-O usuário poderá registrar problemas, informando:
-
-* 👤 Solicitante;
-* 👥 Turma, quando aplicável;
-* 📍 Local/sala;
-* 📝 Descrição;
-* 🕐 Data e hora;
-* 📷 Foto opcional;
-* ⚠️ Tipo de ocorrência.
-
-### Exemplos de ocorrências
-
-* 💧 Vazamento;
-* ❄️ Ar-condicionado com defeito;
-* 💡 Lâmpada queimada;
-* 🖥️ Equipamento danificado;
-* ⚡ Problemas elétricos;
-* 🏗️ Problemas estruturais.
-
----
-
-## 🔄 Fluxo de Atendimento
-
-**📝 Solicitação aberta**
-↓
-**📥 Recebido**
-↓
-**🔧 Em andamento / Em manutenção**
-↓
-**✅ Finalizado**
-
-O sistema deverá registrar o histórico de cada etapa, incluindo:
-
-* Data;
-* Hora;
+* Sala;
+* Turma;
+* Docente;
+* Período;
+* Status;
+* Tipo de ocorrência;
+* Local;
 * Responsável;
-* Status da ocorrência.
+* Prioridade;
+* SLA.
+
+As informações poderão incluir:
+
+**Sala + Turma + Docente + Data + Horário + Status**
+
+Para manutenção:
+
+**Local + Tipo de ocorrência + Data + Status + Prioridade + Responsável + SLA**
 
 ---
 
-# ⏱️ 7. SLA e Indicadores
-
-O módulo de manutenção deverá permitir acompanhar:
-
-* ⏱️ Tempo de resposta;
-* ▶️ Tempo até o início do atendimento;
-* 🛠️ Tempo de solução;
-* ⌛ Tempo total;
-* 🟢 SLA cumprido;
-* 🔴 SLA excedido.
-
-### 📈 Indicadores
-
-Também poderão ser apresentados:
-
-* Total de ocorrências;
-* Ocorrências em andamento;
-* Ocorrências finalizadas;
-* Tempo médio de atendimento;
-* Locais com maior número de ocorrências;
-* Tipos de problemas mais recorrentes.
-
----
-
-# ⭐ 8. Prioridades do Projeto
+# ⭐ 12. Prioridades do Projeto
 
 ## 🥇 Prioridade 1 — Essencial
 
@@ -307,7 +525,9 @@ Também poderão ser apresentados:
 * 🔧 Bloqueio de reserva para salas em manutenção;
 * 🔍 Filtros;
 * 📱 QR Code;
-* ☑️ Checklist patrimonial.
+* ☑️ Checklist patrimonial;
+* 🌐 Acesso público para sugestão de manutenção;
+* 📥 Recebimento e triagem das sugestões pelo setor de Manutenção.
 
 ---
 
@@ -319,11 +539,12 @@ Também poderão ser apresentados:
 * 📚 Histórico de ocorrências;
 * ⏱️ SLA;
 * 📊 Indicadores;
-* 📷 Upload de fotos.
+* 📷 Upload de fotos;
+* 🔎 Validação e classificação das solicitações.
 
 ---
 
-# 🗺️ 9. Roadmap
+# 🗺️ 13. Roadmap
 
 ### 🔹 Fase 1 — Levantamento
 
@@ -332,12 +553,18 @@ Também poderão ser apresentados:
 * Requisitos;
 * Validação.
 
+---
+
 ### 🔹 Fase 2 — Modelagem
 
 * Estrutura do sistema;
 * Perfis;
 * Banco de dados;
-* Fluxos.
+* Fluxos;
+* Modelagem das ocorrências;
+* Fluxo de triagem da manutenção.
+
+---
 
 ### 🔹 Fase 3 — Desenvolvimento
 
@@ -352,22 +579,40 @@ Também poderão ser apresentados:
 * Verificação de disponibilidade;
 * Relatórios.
 
-### 🔹 Fase 4 — Evoluções
+---
+
+### 🔹 Fase 4 — Canal Público
+
+* Página pública de sugestão;
+* Formulário de manutenção;
+* Registro da solicitação;
+* Encaminhamento para o setor de Manutenção;
+* Triagem;
+* Aprovação ou não aprovação.
+
+---
+
+### 🔹 Fase 5 — Evoluções
 
 * QR Code;
 * Checklist;
 * Estudo/implantação do RFID.
 
-### 🔹 Fase 5 — Plano Alternativo
+---
+
+### 🔹 Fase 6 — Plano Alternativo
 
 * Módulo de manutenção;
 * Ocorrências;
 * Atendimento;
 * Histórico;
 * SLA;
-* Relatórios.
+* Relatórios;
+* Indicadores.
 
-### 🔹 Fase 6 — Testes
+---
+
+### 🔹 Fase 7 — Testes
 
 * Testes funcionais;
 * Testes de perfis;
@@ -375,14 +620,23 @@ Também poderão ser apresentados:
 * Testes de disponibilidade e conflitos;
 * Testes de bloqueio de salas ocupadas;
 * Testes de bloqueio de salas em manutenção;
+* Testes do acesso público;
+* Testes do formulário de manutenção;
+* Testes da triagem;
+* Testes de aprovação e não aprovação;
+* Testes de conversão de sugestão em ocorrência;
 * Testes de relatórios;
 * Validação com usuários.
 
 ---
 
-# 🏆 10. Resultado Esperado
+# 🏆 14. Resultado Esperado
 
 Ao final do projeto, espera-se disponibilizar uma **solução integrada para facilitar a gestão dos ambientes da instituição**, proporcionando maior controle sobre utilização, disponibilidade, reservas, patrimônio e manutenção.
+
+### 🌐 Usuário Público
+
+**Acessar → Informar problema → Enviar sugestão**
 
 ### 👔 Coordenação
 
@@ -402,17 +656,69 @@ Ao final do projeto, espera-se disponibilizar uma **solução integrada para fac
 
 ### 🔧 Manutenção
 
-**Receber → Atender → Finalizar → Medir SLA → Gerar relatórios**
+**Receber → Analisar → Validar → Atender → Finalizar → Medir SLA → Gerar relatórios**
 
 ---
 
-> ### 💡 Visão do Projeto
->
+# 🔐 15. Regra de Negócio — Sugestão x Ocorrência
+
+Uma das principais regras do módulo de manutenção será a separação entre **sugestão** e **ocorrência**.
+
+A sugestão enviada pelo usuário representa apenas uma **comunicação de um possível problema**.
+
+Ela somente será transformada em uma ocorrência oficial após a análise do setor de Manutenção.
+
+### Fluxo:
+
+**🌐 Sugestão pública**
+
+↓
+
+**📥 Recebimento**
+
+↓
+
+**🔎 Triagem**
+
+↓
+
+**❌ Não aprovada**
+
+**OU**
+
+**✅ Aprovada**
+
+↓
+
+**🔧 Ocorrência de manutenção**
+
+↓
+
+**▶️ Atendimento**
+
+↓
+
+**🏁 Finalização**
+
+Essa regra permitirá que os relatórios e indicadores do sistema trabalhem com informações mais confiáveis, evitando que relatos não confirmados sejam contabilizados como problemas reais de manutenção.
+
+---
+
+# 💡 16. Visão do Projeto
+
 > **SGA — Sistema de Gestão de Ambientes**
 >
-> Uma solução pensada para transformar informações dispersas em **controle, organização e eficiência na gestão dos ambientes institucionais.**
+> Uma solução pensada para transformar informações dispersas em **controle, organização e eficiência na gestão dos ambientes institucionais**.
+>
+> O sistema também busca aproximar os usuários do setor responsável pela infraestrutura, permitindo que problemas identificados nos ambientes sejam comunicados de forma simples, mesmo sem acesso ao sistema.
+>
+> **Comunicar → Analisar → Validar → Atender → Resolver**
 
 ---
 
-**📄 Documento de escopo inicial — Versão 01**
-**📅 Data de referência: 08/09/2026**
+# 📄 Informações do Documento
+
+**Documento:** Escopo inicial — Versão 01
+**Data de referência:** 08/09/2026
+**Projeto:** SGA — Sistema de Gestão de Ambientes
+**Grupo:** TechFlow 📥
