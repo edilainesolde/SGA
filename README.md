@@ -2,7 +2,7 @@
 
 > **Sistema de Gestão de Ambientes | Organização • Controle • Eficiência**
 
-**👥 Nome provisório do grupo:** 30+
+**👥 Nome do grupo:** TechFlow 📥
 **📅 Reunião de definição do escopo:** 08/09/2026
 **🎓 Etapa:** Segundo semestre
 **📄 Documento:** Escopo inicial — Versão 01
