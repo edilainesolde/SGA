@@ -1,0 +1,39 @@
+@startuml
+title UC05 - Coordenação - Realizar Atribuição
+
+actor "Coordenação" as coordenacao
+boundary "Tela de Atribuição" as tela
+control "Sistema SGA" as sistema
+database "Banco de Dados" as bd
+
+coordenacao -> tela : Acessa atribuições
+tela -> sistema : Solicita dados disponíveis
+
+sistema -> bd : Consulta turmas
+bd --> sistema : Retorna turmas
+
+sistema -> bd : Consulta docentes
+bd --> sistema : Retorna docentes
+
+sistema -> bd : Consulta disciplinas
+bd --> sistema : Retorna disciplinas
+
+sistema --> tela : Exibe opções
+tela --> coordenacao : Apresenta formulário
+
+coordenacao -> tela : Seleciona turma, docente e disciplina
+tela -> sistema : Envia atribuição
+
+sistema -> sistema : Valida atribuição
+
+alt Atribuição válida
+    sistema -> bd : Registra atribuição
+    bd --> sistema : Confirma registro
+    sistema --> tela : Atribuição realizada
+    tela --> coordenacao : Exibe sucesso
+else Atribuição inválida
+    sistema --> tela : Retorna erro
+    tela --> coordenacao : Solicita correção
+end
+
+@enduml

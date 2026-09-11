@@ -1,0 +1,38 @@
+@startuml
+title UC06 - Coordenação - Alocar Ambiente
+
+actor "Coordenação" as coordenacao
+boundary "Tela de Alocação" as tela
+control "Sistema SGA" as sistema
+database "Banco de Dados" as bd
+
+coordenacao -> tela : Acessa alocação de ambiente
+
+tela -> sistema : Solicita turmas e ambientes
+
+sistema -> bd : Consulta turmas
+bd --> sistema : Retorna turmas
+
+sistema -> bd : Consulta ambientes
+bd --> sistema : Retorna ambientes
+
+sistema --> tela : Exibe dados disponíveis
+tela --> coordenacao : Apresenta opções
+
+coordenacao -> tela : Seleciona turma, ambiente e horário
+tela -> sistema : Envia solicitação de alocação
+
+sistema -> bd : Verifica disponibilidade do ambiente
+bd --> sistema : Retorna status
+
+alt Ambiente disponível
+    sistema -> bd : Registra alocação
+    bd --> sistema : Confirma alocação
+    sistema --> tela : Alocação realizada
+    tela --> coordenacao : Exibe sucesso
+else Ambiente indisponível
+    sistema --> tela : Informa indisponibilidade
+    tela --> coordenacao : Solicita outro ambiente
+end
+
+@enduml

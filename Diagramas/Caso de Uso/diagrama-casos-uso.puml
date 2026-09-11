@@ -1,0 +1,80 @@
+@startuml
+
+left to right direction
+
+actor "Secretaria" as secretaria
+actor "Coordenação" as coordenacao
+actor "Docente" as docente
+actor "Manutenção" as manutencao
+actor "Público" as publico
+
+rectangle "SGA - Sistema de Gestão de Ambientes" {
+
+    usecase "Realizar Login" as login
+
+    usecase "Cadastrar Turma" as turma
+    usecase "Cadastrar Docente" as docente_cadastro
+    usecase "Consultar Relatórios" as relatorios
+
+    usecase "Realizar Atribuição" as atribuicao
+    usecase "Alocar Ambiente" as alocacao
+
+    usecase "Consultar Alocação" as consulta_alocacao
+    usecase "Consultar Salas Disponíveis" as salas
+    usecase "Filtrar Salas e Horários" as filtros
+    usecase "Reservar Sala" as reserva
+
+    usecase "Visualizar Solicitações" as solicitacoes
+    usecase "Avaliar Solicitação" as avaliar
+    usecase "Aceitar Solicitação" as aceitar
+    usecase "Recusar Solicitação" as recusar
+    usecase "Gerar Ordem de Serviço" as gerar_os
+    usecase "Visualizar Ordem de Serviço" as visualizar_os
+    usecase "Alterar Status da OS" as status_os
+    usecase "Consultar Indicadores e SLA" as sla
+
+    usecase "Enviar Solicitação\nde Manutenção" as solicitar
+}
+
+' Secretaria
+secretaria --> login
+secretaria --> turma
+secretaria --> docente_cadastro
+secretaria --> relatorios
+
+' Coordenação
+coordenacao --> login
+coordenacao --> turma
+coordenacao --> docente_cadastro
+coordenacao --> relatorios
+coordenacao --> atribuicao
+coordenacao --> alocacao
+
+' Docente
+docente --> login
+docente --> consulta_alocacao
+docente --> salas
+docente --> filtros
+docente --> reserva
+docente --> relatorios
+
+' Manutenção
+manutencao --> login
+manutencao --> solicitacoes
+manutencao --> avaliar
+manutencao --> aceitar
+manutencao --> recusar
+manutencao --> gerar_os
+manutencao --> visualizar_os
+manutencao --> status_os
+manutencao --> sla
+
+' Público
+publico --> solicitar
+
+' Relações da manutenção
+avaliar ..> aceitar : <<include>>
+avaliar ..> recusar : <<include>>
+aceitar ..> gerar_os : <<include>>
+
+@enduml

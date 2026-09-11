@@ -1,0 +1,27 @@
+@startuml
+title UC01 - Realizar Login
+
+actor "Usuário" as usuario
+boundary "Tela de Login" as tela
+control "Sistema SGA" as sistema
+database "Banco de Dados" as bd
+
+usuario -> tela : Acessa tela de login
+tela -> usuario : Solicita usuário e senha
+
+usuario -> tela : Informa credenciais
+tela -> sistema : Envia credenciais
+
+sistema -> bd : Consulta usuário
+bd --> sistema : Retorna dados do usuário
+
+alt Credenciais válidas
+    sistema -> sistema : Identifica perfil de acesso
+    sistema --> tela : Autoriza acesso
+    tela --> usuario : Exibe área do perfil
+else Credenciais inválidas
+    sistema --> tela : Acesso negado
+    tela --> usuario : Exibe mensagem de erro
+end
+
+@enduml

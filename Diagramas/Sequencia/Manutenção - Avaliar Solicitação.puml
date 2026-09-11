@@ -1,0 +1,50 @@
+@startuml
+title UC16 - Manutenção - Avaliar Solicitação
+
+actor "Manutenção" as manutencao
+boundary "Tela de Solicitações" as tela
+control "Sistema SGA" as sistema
+database "Banco de Dados" as bd
+
+manutencao -> tela : Acessa solicitações
+tela -> sistema : Solicita solicitações pendentes
+
+sistema -> bd : Consulta solicitações
+bd --> sistema : Retorna solicitações
+
+sistema --> tela : Exibe solicitações
+tela --> manutencao : Apresenta solicitações
+
+manutencao -> tela : Seleciona solicitação
+tela -> sistema : Solicita detalhes
+
+sistema -> bd : Consulta detalhes
+bd --> sistema : Retorna informações
+
+sistema --> tela : Exibe detalhes
+tela --> manutencao : Apresenta informações
+
+manutencao -> tela : Realiza análise
+manutencao -> tela : Define resultado
+
+tela -> sistema : Envia resultado da análise
+
+alt Solicitação aprovada
+    sistema -> bd : Atualiza status para APROVADA
+    bd --> sistema : Status atualizado
+
+    sistema -> bd : Gera ocorrência / OS
+    bd --> sistema : OS criada
+
+    sistema --> tela : Solicitação aprovada
+    tela --> manutencao : Exibe OS criada
+
+else Solicitação não aprovada
+    sistema -> bd : Atualiza status para NÃO APROVADA
+    bd --> sistema : Status atualizado
+
+    sistema --> tela : Solicitação recusada
+    tela --> manutencao : Exibe resultado
+end
+
+@enduml

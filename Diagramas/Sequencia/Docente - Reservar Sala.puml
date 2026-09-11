@@ -1,0 +1,30 @@
+@startuml
+title UC23 - Público - Enviar Solicitação de Manutenção
+
+actor "Público" as publico
+boundary "Tela Sugerir Manutenção" as tela
+control "Sistema SGA" as sistema
+database "Banco de Dados" as bd
+
+publico -> tela : Acessa "Sugerir Manutenção"
+tela --> publico : Exibe formulário
+
+publico -> tela : Preenche dados da solicitação
+publico -> tela : Adiciona descrição e local
+publico -> tela : Adiciona foto (opcional)
+
+tela -> sistema : Envia solicitação
+
+sistema -> sistema : Valida informações
+
+alt Dados válidos
+    sistema -> bd : Registra solicitação
+    bd --> sistema : Solicitação registrada
+    sistema --> tela : Confirma envio
+    tela --> publico : Exibe confirmação
+else Dados inválidos
+    sistema --> tela : Retorna erros
+    tela --> publico : Solicita correção
+end
+
+@enduml

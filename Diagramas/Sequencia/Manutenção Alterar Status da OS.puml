@@ -1,0 +1,30 @@
+@startuml
+title UC21 - Manutenção - Alterar Status da OS
+
+actor "Manutenção" as manutencao
+boundary "Tela da Ordem de Serviço" as tela
+control "Sistema SGA" as sistema
+database "Banco de Dados" as bd
+
+manutencao -> tela : Acessa ordem de serviço
+
+tela -> sistema : Solicita dados da OS
+sistema -> bd : Consulta OS
+bd --> sistema : Retorna dados
+
+sistema --> tela : Exibe OS
+tela --> manutencao : Apresenta informações
+
+manutencao -> tela : Seleciona novo status
+tela -> sistema : Envia alteração
+
+sistema -> bd : Atualiza status
+bd --> sistema : Confirma atualização
+
+sistema -> bd : Registra histórico
+bd --> sistema : Histórico registrado
+
+sistema --> tela : Status atualizado
+tela --> manutencao : Exibe confirmação
+
+@enduml
