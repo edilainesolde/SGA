@@ -634,29 +634,32 @@ Para manutenção:
 
 Ao final do projeto, espera-se disponibilizar uma **solução integrada para facilitar a gestão dos ambientes da instituição**, proporcionando maior controle sobre utilização, disponibilidade, reservas, patrimônio e manutenção.
 
-### 🌐 Usuário Público
-
-**Acessar → Informar problema → Enviar sugestão**
-
 ### 👔 Coordenação
 
-**Administrar → Cadastrar → Alocar → Consultar → Gerar relatórios**
+**Cadastrar turma/docente** 
+**Alocar de ambiente** 
+**Atribuição de aula** 
+**Relatórios**
 
 ### 🗂️ Secretaria
 
-**Cadastrar → Consultar → Filtrar → Verificar disponibilidade**
+**Cadastrar turma/docente**
+**Relatórios**
 
 ### 👨‍🏫 Docente
 
-**Consultar → Ver disponibilidade → Selecionar data e horário → Verificar status → Reservar**
-
-### 🏷️ Patrimônio
-
-**Identificar → Conferir → Controlar**
+**Solicitação de ambiente** 
+**Reslatorio**
 
 ### 🔧 Manutenção
 
-**Receber → Analisar → Validar → Atender → Finalizar → Medir SLA → Gerar relatórios**
+**Visualização de sugestões**
+**Direcionamento de manutenção**
+
+### 👥 Publico
+
+**Home page** 
+**Sujestão de manutenção**
 
 ---
 
