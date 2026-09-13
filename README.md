@@ -22,16 +22,7 @@
 
 ---
 
-# 👥 Participantes
 
-* **Bianca Cirilo**
-* **Edilaine Paulino**
-* **Fabio Bitencourt**
-* **Guilherme Leite**
-* **Ronaldo Soares**
-* **Vitor Fazano**
-
----
 
 # 🎯 1. Contexto
 
