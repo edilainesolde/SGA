@@ -14,7 +14,7 @@
 |------|------|--------|-------------------|
 | <img src="https://github.com/fabiobitencourt93.png" width="50px"> | **Fabio Bitencourt** | [fabiobitencourt93](https://github.com/fabiobitencourt93) | Em andamento |
 | <img src="https://github.com/guilhermelleiteads.png" width="50px"> | **Guilherme Leite** | [guilhermeleiteads](https://github.com/guilhermelleiteads) | Em andamento |
-| <img src="#" width="50px"> | **Ronaldo Soares** | [Ronaldo Soares](#) | Em andamento |
+| <img src="https://github.com/ronaldorfas" width="50px"> | **Ronaldo Soares** | [Ronaldo Soares](#) | Em andamento |
 | <img src="https://github.com/vfazano.png" width="50px"> | **Vitor Fazano** | [vfazano](https://github.com/vfazano) | Em andamento |
 | <img src="https://github.com/edilainesolde.png" width="50px"> | **Edilaine Paulino** | [edilainesolde](https://github.com/edilainesolde) | Em andamento |
 | <img src="https://github.com/biancaciriloads.png" width="50px"> | **Bianca Cirilo** | [biancacirilo](https://github.com/biancaciriloads) | Em andamento |
