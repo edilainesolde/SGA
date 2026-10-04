@@ -1,0 +1,77 @@
+@startuml
+title UC23 - Enviar Solicitação de Manutenção
+
+autonumber
+
+actor "Público" as Publico
+boundary "Página do SGA" as Interface
+control "Sistema SGA" as Sistema
+database "Banco de Dados" as BD
+actor "Manutenção" as Manutencao
+
+== Acesso à solicitação ==
+
+Publico -> Interface: Acessar página principal
+activate Interface
+
+Interface --> Publico: Exibir página inicial
+
+Publico -> Interface: Selecionar "Sugerir Manutenção"
+Interface --> Publico: Exibir formulário
+
+== Preenchimento ==
+
+Publico -> Interface: Preencher dados da solicitação
+
+note right of Interface
+  Dados:
+  - Nome
+  - E-mail ou contato
+  - Local / Sala
+  - Descrição do problema
+  - Tipo de ocorrência
+  - Data e hora
+  - Foto (opcional)
+  - Observações
+end note
+
+Publico -> Interface: Enviar formulário
+
+Interface -> Sistema: Encaminhar dados
+activate Sistema
+
+== Validação ==
+
+Sistema -> Sistema: Validar informações
+
+alt Dados inválidos
+    Sistema --> Interface: Retornar erros de validação
+    Interface --> Publico: Exibir mensagem de erro
+else Dados válidos
+
+    == Registro da solicitação ==
+
+    Sistema -> BD: Salvar solicitação
+    activate BD
+
+    BD --> Sistema: Confirmar registro
+    deactivate BD
+
+    Sistema --> Interface: Retornar confirmação
+    Interface --> Publico: Exibir mensagem de sucesso
+
+    == Encaminhamento ==
+
+    Sistema -> Manutencao: Disponibilizar solicitação para análise
+    activate Manutencao
+
+    Manutencao --> Sistema: Receber solicitação
+
+    deactivate Manutencao
+
+end
+
+deactivate Sistema
+deactivate Interface
+
+@enduml
