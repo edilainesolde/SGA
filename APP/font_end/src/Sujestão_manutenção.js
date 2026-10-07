@@ -8,6 +8,7 @@ function Sujestão_manutenção() {
 	const [loadingEnv, setLoadingEnv] = useState(true);
 	const [formData, setFormData] = useState({
 		nome: '',
+		ambienteId: '',
 		local: '',
 		sugestao: '',
 	});
@@ -44,15 +45,21 @@ function Sujestão_manutenção() {
 		setSending(true);
 		setError('');
 		try {
+			const payload = {
+				...formData,
+				ambienteId: formData.ambienteId || (formData.local ? String(formData.local).split(' · ')[0] : ''),
+				local: formData.local || (formData.ambienteId ? environments.find((environment) => String(environment.id) === String(formData.ambienteId))?.nome || '' : '')
+			};
+
 			const response = await apiFetch('/api/sugestoes-manutencao', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify(formData),
+				body: JSON.stringify(payload),
 			});
 			const result = await response.json();
 			if (!response.ok) throw new Error(result.erro || 'Não foi possível enviar a sugestão.');
 			setSubmitted(true);
-			setFormData({ nome: '', local: '', sugestao: '' });
+			setFormData({ nome: '', ambienteId: '', local: '', sugestao: '' });
 		} catch (submitError) {
 			setError(submitError.message);
 		} finally {
@@ -82,11 +89,11 @@ function Sujestão_manutenção() {
 						Nome
 						<input id="nome" name="nome" type="text" value={formData.nome} onChange={handleChange} required />
 					</label>
-					<label htmlFor="local">
+					<label htmlFor="ambienteId">
 						Local da sugestão
-						<select id="local" name="local" value={formData.local} onChange={handleChange} disabled={loadingEnv} required>
+						<select id="ambienteId" name="ambienteId" value={formData.ambienteId} onChange={handleChange} disabled={loadingEnv} required>
 							<option value="">{loadingEnv ? 'Carregando ambientes...' : 'Selecione um ambiente'}</option>
-							{environments.map((environment) => <option value={`${environment.codigo} · ${environment.nome}`} key={environment.id}>{environment.codigo} · {environment.nome}</option>)}
+							{environments.map((environment) => <option value={environment.id} key={environment.id}>{environment.codigo} · {environment.nome}</option>)}
 						</select>
 					</label>
 					<label htmlFor="sugestao">
