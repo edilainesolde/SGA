@@ -1,0 +1,114 @@
+@startuml
+title SGA — Sistema de Gestão de Ambientes\nDiagrama de Casos de Uso
+
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle awesome
+
+actor "Secretaria" as secretaria
+actor "Coordenação" as coordenacao
+actor "Docente" as docente
+actor "Manutenção" as manutencao
+actor "Público" as publico
+
+rectangle "SGA - Sistema de Gestão de Ambientes" {
+
+  package "Autenticação" {
+    usecase "Realizar Login\n(UC01)" as UC01
+  }
+
+  package "Secretaria e Coordenação" {
+    usecase "Cadastrar Turma\n(UC02 / UC07)" as UC02
+    usecase "Cadastrar Docente\n(UC03 / UC08)" as UC03
+    usecase "Consultar Relatórios\n(UC04 / UC09)" as UC04
+  }
+
+  package "Coordenação" {
+    usecase "Realizar Atribuição\n(UC05)" as UC05
+    usecase "Alocar Ambiente\n(UC06)" as UC06
+  }
+
+  package "Docente" {
+    usecase "Consultar Alocação\n(UC10)" as UC10
+    usecase "Consultar Salas Disponíveis\n(UC11)" as UC11
+    usecase "Filtrar Salas e Horários\n(UC12)" as UC12
+    usecase "Reservar Sala\n(UC13)" as UC13
+    usecase "Consultar Relatórios\n(UC14)" as UC14
+  }
+
+  package "Manutenção" {
+    usecase "Visualizar Solicitações\n(UC15)" as UC15
+    usecase "Avaliar Solicitação\n(UC16)" as UC16
+    usecase "Aceitar Solicitação\n(UC17)" as UC17
+    usecase "Recusar Solicitação\n(UC18)" as UC18
+    usecase "Gerar Ordem de Serviço\n(UC19)" as UC19
+    usecase "Visualizar Ordem de Serviço\n(UC20)" as UC20
+    usecase "Alterar Status da OS\n(UC21)" as UC21
+    usecase "Consultar Indicadores e SLA\n(UC22)" as UC22
+  }
+
+  package "Solicitação pública" {
+    usecase "Enviar Solicitação de Manutenção\n(UC23)" as UC23
+  }
+}
+
+' Autenticação
+secretaria --> UC01
+coordenacao --> UC01
+docente --> UC01
+manutencao --> UC01
+
+' Secretaria
+secretaria --> UC02
+secretaria --> UC03
+secretaria --> UC04
+
+' Coordenação
+coordenacao --> UC02
+coordenacao --> UC03
+coordenacao --> UC04
+coordenacao --> UC05
+coordenacao --> UC06
+
+' Docente
+docente --> UC10
+docente --> UC11
+docente --> UC12
+docente --> UC13
+docente --> UC14
+
+' Manutenção
+manutencao --> UC15
+manutencao --> UC16
+manutencao --> UC17
+manutencao --> UC18
+manutencao --> UC19
+manutencao --> UC20
+manutencao --> UC21
+manutencao --> UC22
+
+' Público não precisa realizar login
+publico --> UC23
+
+note bottom of UC23
+  O Público envia a solicitação sem autenticação.
+  A solicitação é recebida pela Manutenção para análise.
+end note
+
+note bottom of UC13
+  A disponibilidade da sala deve ser revalidada
+  no momento da confirmação da reserva.
+end note
+
+note right of UC17
+  Solicitação aprovada pode gerar
+  uma ocorrência / Ordem de Serviço.
+end note
+
+note right of UC18
+  Registrar o resultado da análise
+  quando a solicitação não for aprovada.
+end note
+
+@enduml
