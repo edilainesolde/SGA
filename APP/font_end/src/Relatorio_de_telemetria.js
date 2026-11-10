@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import BotaoVoltar from './Botao_voltar';
+import { apiFetch } from './api';
 import './Relatorio_de_telemetria.css';
-
-const apiUrl = (process.env.REACT_APP_TELEMETRIA_API_URL || 'http://localhost:3002').replace(/\/$/, '');
 
 function RelatorioDeTelemetria() {
 	const [machines, setMachines] = useState([]);
@@ -15,7 +14,7 @@ function RelatorioDeTelemetria() {
 
 		async function loadMachines() {
 			try {
-				const response = await fetch(`${apiUrl}/api/machines`);
+				const response = await apiFetch('/api/machines');
 				const result = await response.json();
 				if (!response.ok) throw new Error(result.error || 'Não foi possível carregar a telemetria.');
 				if (!Array.isArray(result)) throw new Error('A API retornou dados inválidos.');
