@@ -5,12 +5,20 @@ set "APP_DIR=%~dp0"
 
 if /I "%~1"=="api" goto run_api
 if /I "%~1"=="frontend" goto run_frontend
+if /I "%~1"=="node-red" goto run_node_red
 
 netstat -ano | findstr /R /C:":3001 .*LISTENING" >nul
 if errorlevel 1 (
 	start "SGA API (3001)" /D "%APP_DIR%beck_end" "%ComSpec%" /k call "%~f0" api
 	call :wait_port 3001
 	if errorlevel 1 goto api_failed
+)
+
+netstat -ano | findstr /R /C:":1880 .*LISTENING" >nul
+if errorlevel 1 (
+	start "Node-RED (1880)" /D "%APP_DIR%beck_end" "%ComSpec%" /k call "%~f0" node-red
+	call :wait_port 1880
+	if errorlevel 1 goto node_red_failed
 )
 
 netstat -ano | findstr /R /C:":3000 .*LISTENING" >nul
@@ -46,6 +54,11 @@ echo A API nao respondeu na porta 3001. Verifique a janela SGA API (3001).
 pause
 exit /b 1
 
+:node_red_failed
+echo O Node-RED nao respondeu na porta 1880. Verifique a janela Node-RED (1880).
+pause
+exit /b 1
+
 :run_api
 if not exist node_modules (
 	call npm.cmd install
@@ -56,6 +69,18 @@ if not exist node_modules (
 	)
 )
 call npm.cmd start
+exit /b
+
+:run_node_red
+if not exist node_modules (
+	call npm.cmd install
+	if errorlevel 1 (
+		echo Falha ao instalar as dependencias do Node-RED.
+		pause
+		exit /b 1
+	)
+)
+call npm.cmd run node-red
 exit /b
 
 :run_frontend
