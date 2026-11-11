@@ -160,6 +160,7 @@ begin
   if exists (select 1 from pg_roles where rolname = 'service_role') then
     execute 'grant usage on schema public to service_role';
     execute 'grant select, insert, update, delete on all tables in schema public to service_role';
+    execute 'grant select, insert, update, delete on table public.alocacoes_ambiente to service_role';
     execute 'grant usage, select on all sequences in schema public to service_role';
   end if;
 end
