@@ -1,0 +1,34 @@
+@startuml
+title SGA - Diagrama Entidade-Relacionamento da Manutenção
+
+hide methods
+hide stereotypes
+skinparam linetype ortho
+
+entity "ambientes" as ambientes {
+  * id : bigint <<PK>>
+  --
+  nome : text
+  tipo : text
+  local : text
+  capacidade : integer
+  status : text
+}
+
+entity "sugestoes_manutencao" as sugestoes {
+  * id : bigint <<PK>>
+  --
+  ambiente_id : bigint <<FK>>
+  nome : varchar
+  sujestao : varchar
+  status : varchar
+  criadoem : timestamptz
+}
+
+ambientes ||--o{ sugestoes : "possui"
+
+note bottom of sugestoes
+  criadoem registra data e hora da solicitação.
+  A migração define DEFAULT now().
+end note
+@enduml
