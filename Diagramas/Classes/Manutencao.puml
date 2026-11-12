@@ -1,0 +1,70 @@
+@startuml
+title SGA - Diagrama de Classes da Manutenção
+
+skinparam classAttributeIconSize 0
+
+package "Frontend (React)" {
+  class FormularioManutencao {
+    - nome: string
+    - ambienteId: number
+    - sugestao: string
+    + enviarSolicitacao(): Promise
+  }
+
+  class RelatorioManutencao {
+    + listarSolicitacoes(): Promise
+    + formatarDataHora(criadoEm): string
+  }
+
+  class DirecionamentoManutencao {
+    + listarSolicitacoes(): Promise
+    + atualizarStatus(id, status): Promise
+  }
+}
+
+package "Backend (Express)" {
+  class ManutencaoRoutes {
+    + listar(req, res): void
+    + criar(req, res): void
+    + atualizarStatus(req, res): void
+  }
+
+  class ManutencaoService {
+    + listSugestoes(): Promise
+    + createSugestao(dados): Promise
+    + updateSugestaoStatus(id, dados): Promise
+  }
+}
+
+package "Persistência (Supabase)" {
+  class SugestaoManutencao {
+    + id: bigint
+    + ambiente_id: bigint
+    + nome: string
+    + sujestao: string
+    + status: string
+    + criadoem: timestamp with time zone
+  }
+
+  class Ambiente {
+    + id: bigint
+    + nome: string
+    + tipo: string
+    + local: string
+    + capacidade: integer
+    + status: string
+  }
+}
+
+FormularioManutencao ..> ManutencaoRoutes : POST /api/sugestoes-manutencao
+RelatorioManutencao ..> ManutencaoRoutes : GET /api/sugestoes-manutencao
+DirecionamentoManutencao ..> ManutencaoRoutes : GET / PATCH
+ManutencaoRoutes --> ManutencaoService
+ManutencaoService --> SugestaoManutencao : cria, consulta e atualiza
+SugestaoManutencao "*" --> "1" Ambiente : ambiente_id
+
+note right of SugestaoManutencao
+  criadoem recebe o instante da criação
+  em ISO 8601, incluindo o fuso horário.
+end note
+@enduml
