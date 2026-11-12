@@ -12,5 +12,14 @@ describe('formatDateTime', () => {
 		expect(formatted).not.toBe('Data não registrada');
 		expect(formatted).not.toContain('1969');
 		expect(formatted).toContain('2026');
+		expect(formatted).toContain('20:29');
+	});
+
+	it('does not display a fabricated 21:00 time for date-only values', () => {
+		const formatted = formatDateTime('2026-11-04');
+
+		expect(formatted).toContain('2026');
+		expect(formatted).not.toContain('21:00');
+		expect(formatted).not.toContain(':');
 	});
 });
